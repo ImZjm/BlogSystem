@@ -1,0 +1,29 @@
+server:
+    port: 8080
+
+spring:
+    profiles:
+        # 外置 配置文件
+        active: jdbc,redis,mail
+    thymeleaf:
+        cache: false
+    messages:
+        basename: i18n.logo
+
+mybatis:
+    configuration:
+        # 驼峰命名匹配    开启
+        map-underscore-to-camel-case: true
+    #  XML映射文件路径
+    mapper-locations: classpath:mapper/*.xml
+    # 配置XML映射文件中指定的实体类别名路径
+    type-aliases-package: stu.imZjm.model.domain
+
+pagehelper:
+    helper-dialect: mysql
+    reasonable: true
+    support-methods-arguments: true
+    params: count=countSql
+
+COOKIE:
+    VALIDITY: 1800

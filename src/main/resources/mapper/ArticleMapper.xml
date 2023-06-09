@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="stu.imzjm.dao.ArticleMapper">
+    <update id="updateArticleWithId" parameterType="Article">
+        update t_article
+        <set>
+            <if test="title != null">
+                title = #{title},
+            </if>
+
+            <if test="content != null">
+                content = #{content},
+            </if>
+
+            <if test="created != null">
+                created = #{created},
+            </if>
+
+            <if test="modified != null">
+                modified = #{modified},
+            </if>
+
+            <if test="categories != null">
+                categories = #{categories},
+            </if>
+
+            <if test="tags != null">
+                tags = #{tags},
+            </if>
+
+            <if test="allowComment != null">
+                allow_comment = #{allowComment},
+            </if>
+
+            <if test="thumbnail != null">
+                thumbnail = #{thumbnail},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

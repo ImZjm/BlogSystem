@@ -1,0 +1,45 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.1.0'
+	id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group = 'ImZjm'
+version = '1.0'
+sourceCompatibility = '17'
+
+repositories {
+	maven {
+		url 'https://maven.aliyun.com/repository/public/'
+	}
+	maven {
+		url 'https://maven.aliyun.com/repository/gradle-plugin'
+	}
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.yaml:snakeyaml:2.0'
+	implementation 'org.json:json:20230227'
+	implementation 'com.alibaba:druid-spring-boot-starter:1.1.20'
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.2'
+	implementation 'com.vdurmont:emoji-java:5.1.1'
+	runtimeOnly 'com.mysql:mysql-connector-j'
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'com.github.pagehelper:pagehelper-spring-boot-starter:1.4.6'
+	implementation 'org.apache.commons:commons-lang3:3.12.0'
+	implementation 'com.atlassian.commonmark:commonmark:0.11.0'
+	implementation 'com.atlassian.commonmark:commonmark-ext-gfm-tables:0.11.0'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
