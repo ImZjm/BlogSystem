@@ -25,4 +25,11 @@ public interface IArticleService {
      * 根据 文章id 修改文章
      */
     void updateArticleWithId(Article article);
+
+    /**
+     * 根据 文章id 删除文章
+     *
+     * @param id 文章ID
+     */
+    void deleteArticleWithId(int id);
 }

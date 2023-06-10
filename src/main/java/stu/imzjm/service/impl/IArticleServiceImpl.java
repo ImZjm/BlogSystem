@@ -8,6 +8,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import stu.imzjm.dao.ArticleMapper;
+import stu.imzjm.dao.CommentMapper;
 import stu.imzjm.dao.StatisticMapper;
 import stu.imzjm.model.domain.Article;
 import stu.imzjm.model.domain.Statistic;
@@ -28,6 +29,9 @@ public class IArticleServiceImpl implements IArticleService {
 
     @Resource
     private RedisTemplate<String, Article> redisTemplate;
+
+    @Resource
+    private CommentMapper commentMapper;
 
     //分页查询文章列表
     @Override
@@ -100,5 +104,19 @@ public class IArticleServiceImpl implements IArticleService {
         article.setModified(new Date());
         articleMapper.updateArticleWithId(article);
         redisTemplate.delete("article_" + article.getId());
+    }
+
+    //删除文章
+    @Override
+    public void deleteArticleWithId(int id) {
+        //删除文章,同时删除文章的缓存
+        articleMapper.deleteArticleWithId(id);
+        redisTemplate.delete("article_" + id);
+
+        //删除统计数据
+        statisticMapper.deleteStatisticWithId(id);
+
+        //删除评论数据
+        commentMapper.deleteCommentWithId(id);
     }
 }
