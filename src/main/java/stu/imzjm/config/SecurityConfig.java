@@ -5,31 +5,26 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
-import javax.sql.DataSource;
+import stu.imzjm.service.AuthorizeService;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
     @Resource
-    private DataSource dataSource;
-
-//    @Bean
-//    public BCryptPasswordEncoder passwordEncoder(){
-//        return new BCryptPasswordEncoder();
-//    }
+    private AuthorizeService authorizeService;
 
     @Bean
-    public NoOpPasswordEncoder passwordEncoder() {
-        return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
                         .usernameParameter("username")
@@ -40,8 +35,11 @@ public class SecurityConfig {
                         .requestMatchers("/", "/page/**", "/article/**", "/login").permitAll()
                         .requestMatchers("/back/**", "/assets/**", "/user/**", "/article_img/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("admin")
+                        .anyRequest().authenticated()
 
-                );
+                )
+
+                .userDetailsService(authorizeService);
 
 
         return http.build();
