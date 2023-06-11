@@ -1,4 +1,5 @@
 # BlogSystem
+基于Spring Boot 3.1.0
 
 ## 环境
 
