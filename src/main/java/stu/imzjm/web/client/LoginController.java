@@ -30,9 +30,8 @@ public class LoginController {
         return "comm/login";
     }
 
-    @GetMapping("/errorPage/{page}/{code}")
-    public String AccessExceptionHandler(@PathVariable String page,
-                                         @PathVariable String code) {
-        return page + "/" + code;
+    @GetMapping("/error/{code}")
+    public String AccessExceptionHandler(@PathVariable String code) {
+        return ("error/" + code);
     }
 }
