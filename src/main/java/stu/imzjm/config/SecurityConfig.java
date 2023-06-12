@@ -5,6 +5,7 @@ import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.AccessDeniedException;
@@ -31,6 +32,10 @@ public class SecurityConfig {
 
     @Resource
     private AuthorizeService authorizeService;
+
+    @Value("${COOKIE.VALIDITY}")
+    private Integer COOKIE_VALIDITY;
+
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -60,7 +65,12 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
 
-                .userDetailsService(authorizeService);
+                .userDetailsService(authorizeService)
+
+                .rememberMe(rememberMe -> rememberMe
+                        .alwaysRemember(true)
+                        .tokenValiditySeconds(COOKIE_VALIDITY)
+                );
 
 
         return http.build();
@@ -79,9 +89,7 @@ public class SecurityConfig {
         else {
             //直接访问登录页面登录的角色,根据用户角色 分别重定向到首页或后台
             Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-            System.out.println(authorities);
             boolean isAdmin = authorities.contains(new SimpleGrantedAuthority("ROLE_admin"));
-            System.out.println(isAdmin);
             if (isAdmin)
                 response.sendRedirect("/admin");
             else
