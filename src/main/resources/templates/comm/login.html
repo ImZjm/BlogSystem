@@ -1,61 +1,77 @@
 <!DOCTYPE html>
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>登录博客后台</title>
-
-    <meta http-equiv="Cache-Control" content="no-siteapp"/>
-    <link rel="shortcut icon" th:href="@{/user/img/bloglogo.jpg}"/>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+    <link rel="stylesheet" th:href="@{/myLogin/css/style.css}">
     <script th:src="@{/assets/js/jquery.min.js}"></script>
-    <script th:src="@{/assets/js/amazeui.min.js}"></script>
-    <link rel="stylesheet" th:href="@{/assets/css/amazeui.min.css}"/>
-    <link rel="stylesheet" th:href="@{/assets/css/app.css}"/>
 </head>
-
 <body>
-
-<div class="log">
-    <div class="am-g">
-        <div class="am-u-lg-3 am-u-md-6 am-u-sm-8 am-u-sm-centered log-content">
-            <h1 class="log-title am-animation-slide-top" style="color: black;" th:text="#{login.welcomeTitle}">
-                ~欢迎登录博客~</h1>
-            <br>
-            <div th:if="${param.error}" style="color: red" th:text="#{login.error}">用户名或密码错误!</div>
-            <form class="am-form" id="loginForm" th:action="@{/login}" method="post">
-                <div>
-                    <input type="hidden" name="url" th:value="${url}">
-                </div>
-                <div class="am-input-group am-radius am-animation-slide-left">
-                    <input type="text" class="am-radius" th:placeholder="#{login.username}" name="username"/>
-                    <span class="am-input-group-label log-icon am-radius">
-                        <i class="am-icon-user am-icon-sm am-icon-fw"></i>
-                    </span>
-                </div>
-                <br>
-                <div class="am-input-group am-animation-slide-left log-animation-delay">
-                    <input type="password" class="am-form-field am-radius log-input" th:placeholder="#{login.password}"
-                           name="password"/>
-                    <span class="am-input-group-label log-icon am-radius">
-                        <i class="am-icon-lock am-icon-sm am-icon-fw"></i>
-                    </span>
-                </div>
-                <div style="padding-top: 10px;">
-                    <input type="submit" th:value="#{login.sub}"
-                           class="am-btn am-btn-primary am-btn-block am-btn-lg am-radius am-animation-slide-bottom log-animation-delay"/>
-                </div>
-            </form>
+<div class="box">
+    <div class="cover_box">
+        <h1>只因你实在是太美!</h1>
+        <p>你干嘛</p>
+        <div class="img_box">
+            <img th:src="@{/myLogin/img/Nahida.jpg}">
         </div>
     </div>
+    <div class="register_form">
+        <div class="title_box">
+            <h1>注册</h1>
+        </div>
+        <div class="input_box">
+            <input type="text" placeholder="用户名">
+            <input type="password" placeholder="密码">
+            <input type="password" placeholder="确认密码">
+        </div>
+        <div class="btn_box">
+            <input type="button" value="注册">
+            <p onclick="swi()">已有帐号，点只因登录</p>
+        </div>
 
-    <footer class="log-footer">
-        <p style="margin: 30px; color: #2E2D3C">
-            <time class="comment-time" th:text="${#dates.format(new java.util.Date().getTime(), 'yyyy')}"></time> &copy;
-            Powered By <a style="color: #0e90d2" rel="nofollow">CrazyStone</a></p>
-    </footer>
+    </div>
+    <div class="login_form">
+        <div class="title_box">
+            <h1>登录</h1>
+        </div>
+        <div class="error_box" style="color: red">
+            <span th:if="${param.error}" th:text="#{login.error}">用户名或密码错误!</span>
+        </div>
+        <form class="input_box" name="loginForm" th:action="@{/login}" method="post">
+            <div>
+                <input type="hidden" name="url" th:value="${url}">
+            </div>
+            <input type="text" placeholder="用户名" name="username">
+            <input type="password" placeholder="密码" name="password">
+        </form>
+        <div class="btn_box">
+            <input type="button" value="登录" onclick="document.loginForm.submit();">
+            <p onclick="swi()">还没有账号？点击注册</p>
+        </div>
+    </div>
 </div>
+<div class="footer_box">
+    <p>本页面仅供学习交流使用&nbsp;&nbsp;&nbsp;&nbsp;本页参考<a
+            href="https://player.bilibili.com/player.html?aid=600881896&bvid=BV1RB4y1h7bT&cid=774282461&page=1">bilibili</a>
+    </p>
+</div>
+<script>
+    var flag = true;
+
+    function swi() {
+        if (flag) {
+            $(".cover_box").css("transform", "translateX(100%)")
+            $(".cover_box").css("background-color", "rgb(252,252,135)")
+            $("img").attr("src", "./myLogin/img/iKun.jpg")
+        } else {
+            $(".cover_box").css("transform", "translateX(0%)")
+            $(".cover_box").css("background-color", "rgb(139,240,130)")
+            $("img").attr("src", "./myLogin/img/Nahida.jpg")
+        }
+        flag = !flag
+    }
+</script>
 </body>
 </html>
